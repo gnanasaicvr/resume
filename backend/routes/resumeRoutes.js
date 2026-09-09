@@ -1,29 +1,25 @@
 const express = require("express");
 
-const upload =
-    require("../middleware/uploadMiddleware");
+const upload = require("../middleware/uploadMiddleware");
 
 const {
-    uploadResumes,
-    analyzeResumes
+  uploadResumes,
+  analyzeResumes
 } = require("../controllers/resumeController");
 
 const router = express.Router();
 
-
 // Upload resumes
 router.post(
-    "/upload",
-    upload.array("resumes", 100),
-    uploadResumes
+  "/upload",
+  upload.array("resumes", 100),
+  uploadResumes
 );
 
-
-// Analyze candidates
+// Analyze resumes
 router.post(
-    "/analyze",
-    analyzeResumes
+  "/analyze",
+  analyzeResumes
 );
-
 
 module.exports = router;

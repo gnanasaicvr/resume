@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://resume-aprk.onrender.com/api/candidates",
+  baseURL: "https://resume-aprk.onrender.com/api/resumes",
 });
 
 export const uploadResumes = async (files) => {
@@ -12,7 +12,7 @@ export const uploadResumes = async (files) => {
   });
 
   const response = await API.post(
-    "/resumes/upload",
+    "/upload",
     formData
   );
 
@@ -24,7 +24,7 @@ export const analyzeCandidates = async (
   resumes
 ) => {
   const response = await API.post(
-    "/resumes/analyze",
+    "/analyze",
     {
       jobDescription,
       resumes,

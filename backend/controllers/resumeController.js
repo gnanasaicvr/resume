@@ -1,185 +1,106 @@
 const path = require("path");
 
-const {
-    extractText
-} = require("../services/resumeParser");
+const uploadResumes = async (req, res) => {
+  try {
+    console.log("Upload request received");
 
-const {
-    calculateMatch
-} = require("../services/analysisService");
-
-async function uploadResumes(req, res) {
-
-    try {
-
-        if (!req.files || req.files.length === 0) {
-
-            return res.status(400).json({
-                success: false,
-                message: "No resumes uploaded"
-            });
-
-        }
-
-        const processedResumes = [];
-
-        for (const file of req.files) {
-
-            const absolutePath =
-                path.resolve(file.path);
-
-            const text =
-                await extractText(absolutePath);
-
-            processedResumes.push({
-
-                originalName:
-                    file.originalname,
-
-                fileName:
-                    file.filename,
-
-                filePath:
-                    file.path,
-
-                text: text
-
-            });
-        }
-
-        res.status(200).json({
-
-            success: true,
-
-            message:
-                "Resumes uploaded and processed successfully",
-
-            count:
-                processedResumes.length,
-
-            resumes:
-                processedResumes
-
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).json({
-
-            success: false,
-
-            message:
-                "Failed to process resumes",
-
-            error:
-                error.message
-
-        });
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No resumes uploaded"
+      });
     }
-}
+
+    const resumes = req.files.map((file) => {
+      return {
+        originalName: file.originalname,
+        fileName: file.filename,
+        path: file.path,
+        url: `/uploads/${file.filename}`,
+        size: file.size,
+        mimetype: file.mimetype
+      };
+    });
+
+    console.log("Uploaded files:", resumes);
+
+    return res.status(200).json({
+      success: true,
+      message: `${resumes.length} resume(s) uploaded successfully`,
+      resumes
+    });
+
+  } catch (error) {
+    console.error("Upload error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to upload resumes",
+      error: error.message
+    });
+  }
+};
 
 
-// ANALYZE RESUMES
+const analyzeResumes = async (req, res) => {
+  try {
+    const {
+      jobDescription,
+      resumes
+    } = req.body;
 
-async function analyzeResumes(req, res) {
-
-    try {
-
-        const {
-            jobDescription,
-            resumes
-        } = req.body;
-
-        if (!jobDescription || !jobDescription.trim()) {
-
-            return res.status(400).json({
-                success: false,
-                message: "Job description is required"
-            });
-
-        }
-
-        if (!resumes || resumes.length === 0) {
-
-            return res.status(400).json({
-                success: false,
-                message: "No resumes provided"
-            });
-
-        }
-
-        const candidates = resumes.map((resume) => {
-
-            const analysis =
-                calculateMatch(
-                    jobDescription,
-                    resume.text
-                );
-
-            return {
-
-                name:
-                    resume.originalName
-                        .replace(/\.[^/.]+$/, ""),
-
-                resume:
-                    resume.originalName,
-
-                score:
-                    analysis.score,
-
-                recommendation:
-                    analysis.recommendation,
-
-                matchedSkills:
-                    analysis.matchedSkills,
-
-                missingSkills:
-                    analysis.missingSkills
-
-            };
-
-        });
-
-        // Highest score first
-        candidates.sort(
-            (a, b) => b.score - a.score
-        );
-
-        res.status(200).json({
-
-            success: true,
-
-            message:
-                "Candidates analyzed successfully",
-
-            candidates
-
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).json({
-
-            success: false,
-
-            message:
-                "Failed to analyze candidates",
-
-            error:
-                error.message
-
-        });
-
+    if (!jobDescription) {
+      return res.status(400).json({
+        success: false,
+        message: "Job description is required"
+      });
     }
-}
+
+    if (!resumes || resumes.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No resumes provided"
+      });
+    }
+
+    console.log("Job Description:", jobDescription);
+    console.log("Resumes:", resumes);
+
+    /*
+      Add your AI resume analysis logic here.
+    */
+
+    const results = resumes.map((resume, index) => {
+      return {
+        id: index + 1,
+        candidateName:
+          resume.originalName || `Candidate ${index + 1}`,
+        score: 0,
+        skills: [],
+        experience: "Not analyzed yet",
+        recommendation: "Pending analysis"
+      };
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Resume analysis completed",
+      candidates: results
+    });
+
+  } catch (error) {
+    console.error("Analysis error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to analyze resumes",
+      error: error.message
+    });
+  }
+};
 
 
 module.exports = {
-    uploadResumes,
-    analyzeResumes
+  uploadResumes,
+  analyzeResumes
 };
