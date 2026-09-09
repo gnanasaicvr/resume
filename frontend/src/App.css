@@ -1,0 +1,545 @@
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+  /* ========================================= */
+/* CANDIDATE RESULTS TABLE */
+/* ========================================= */
+
+.candidate-table-container {
+
+  width: 100%;
+
+  margin-top: 50px;
+
+  margin-bottom: 60px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 10px 35px
+    rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* ========================================= */
+/* TABLE HEADER */
+/* ========================================= */
+
+.table-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 25px;
+
+}
+
+
+.table-header h2 {
+
+  margin: 0;
+
+  font-size: 28px;
+
+  color: #1f2937;
+
+}
+
+
+.table-header p {
+
+  margin: 7px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+}
+
+
+.candidate-count {
+
+  background: #efedff;
+
+  color: #5146e5;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  font-weight: 700;
+
+}
+
+
+/* ========================================= */
+/* TABLE WRAPPER */
+/* ========================================= */
+
+.table-wrapper {
+
+  width: 100%;
+
+  overflow-x: auto;
+
+}
+
+
+/* ========================================= */
+/* TABLE */
+/* ========================================= */
+
+.candidate-table {
+
+  width: 100%;
+
+  min-width: 1100px;
+
+  border-collapse: collapse;
+
+}
+
+
+.candidate-table th {
+
+  padding: 16px;
+
+  text-align: left;
+
+  background: #f8f9fc;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  border-bottom:
+    1px solid #e5e7eb;
+
+}
+
+
+.candidate-table td {
+
+  padding: 18px 16px;
+
+  vertical-align: top;
+
+  border-bottom:
+    1px solid #eeeeee;
+
+}
+
+
+.candidate-table tbody tr:hover {
+
+  background: #fafaff;
+
+}
+
+
+/* ========================================= */
+/* RANK */
+/* ========================================= */
+
+.rank {
+
+  font-weight: 800;
+
+  color: #5146e5;
+
+  font-size: 16px;
+
+}
+
+
+/* ========================================= */
+/* CANDIDATE NAME */
+/* ========================================= */
+
+.candidate-name {
+
+  color: #1f2937;
+
+  font-size: 15px;
+
+}
+
+
+/* ========================================= */
+/* RESUME NAME */
+/* ========================================= */
+
+.resume-name {
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  display: block;
+
+  max-width: 180px;
+
+  word-break: break-word;
+
+}
+
+
+/* ========================================= */
+/* SCORE */
+/* ========================================= */
+
+.score-container {
+
+  min-width: 100px;
+
+}
+
+
+.score {
+
+  display: block;
+
+  color: #5146e5;
+
+  font-size: 18px;
+
+  margin-bottom: 7px;
+
+}
+
+
+.score-bar {
+
+  width: 100px;
+
+  height: 7px;
+
+  background: #e5e7eb;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+}
+
+
+.score-fill {
+
+  height: 100%;
+
+  background: #5146e5;
+
+  border-radius: 20px;
+
+}
+
+
+/* ========================================= */
+/* RECOMMENDATION */
+/* ========================================= */
+
+.recommendation {
+
+  display: inline-block;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+}
+
+
+.recommendation.excellent-match {
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+}
+
+
+.recommendation.good-match {
+
+  background: #dbeafe;
+
+  color: #1d4ed8;
+
+}
+
+
+.recommendation.average-match {
+
+  background: #fef3c7;
+
+  color: #b45309;
+
+}
+
+
+.recommendation.low-match {
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+}
+
+
+/* ========================================= */
+/* SKILLS */
+/* ========================================= */
+
+.skills {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  min-width: 180px;
+
+  max-width: 280px;
+
+}
+
+
+.skill-tag {
+
+  padding: 5px 9px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+}
+
+
+.matched-tag {
+
+  background: #ecfdf5;
+
+  color: #047857;
+
+}
+
+
+.missing-tag {
+
+  background: #fff1f2;
+
+  color: #be123c;
+
+}
+
+
+.none {
+
+  color: #9ca3af;
+
+  font-size: 12px;
+
+}
+}
