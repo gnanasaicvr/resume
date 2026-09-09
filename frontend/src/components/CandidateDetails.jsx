@@ -4,8 +4,28 @@ function CandidateDetails({
   candidate,
   onClose
 }) {
-
   if (!candidate) return null;
+
+  const name =
+    candidate.name ||
+    candidate.candidateName ||
+    "Unknown Candidate";
+
+  const email =
+    candidate.email ||
+    "Email not available";
+
+  const matchedSkills =
+    candidate.matchedSkills || [];
+
+  const missingSkills =
+    candidate.missingSkills || [];
+
+  const certifications =
+    candidate.certifications || [];
+
+  const projects =
+    candidate.projects || [];
 
   return (
     <div className="details-overlay">
@@ -22,26 +42,27 @@ function CandidateDetails({
         <div className="details-header">
 
           <div className="large-avatar">
-            {candidate.name.charAt(0)}
+            {name.charAt(0).toUpperCase()}
           </div>
 
           <div>
 
             <h2>
-              {candidate.name}
+              {name}
             </h2>
 
             <p>
-              {candidate.email}
+              {email}
             </p>
 
           </div>
 
           <ScoreBadge
-            score={candidate.score}
+            score={candidate.score || 0}
           />
 
         </div>
+
 
         <div className="recommendation-box">
 
@@ -50,108 +71,186 @@ function CandidateDetails({
           </h3>
 
           <p>
-            {candidate.aiRecommendation}
+            {candidate.aiRecommendation ||
+              candidate.recommendation ||
+              "No recommendation available"}
           </p>
 
         </div>
 
+
         <div className="details-grid">
+
+          {/* Matched Skills */}
 
           <div className="details-section">
 
-            <h3>Technical Skills</h3>
+            <h3>
+              Technical Skills
+            </h3>
 
             <div className="tags">
 
-              {candidate.matchedSkills.map(
-                (skill) => (
+              {matchedSkills.length > 0 ? (
+
+                matchedSkills.map((skill) => (
+
                   <span
                     className="tag matched"
                     key={skill}
                   >
                     ✓ {skill}
                   </span>
-                )
+
+                ))
+
+              ) : (
+
+                <span>
+                  None
+                </span>
+
               )}
 
             </div>
 
           </div>
 
+
+          {/* Missing Skills */}
+
           <div className="details-section">
 
-            <h3>Missing Skills</h3>
+            <h3>
+              Missing Skills
+            </h3>
 
             <div className="tags">
 
-              {candidate.missingSkills.map(
-                (skill) => (
+              {missingSkills.length > 0 ? (
+
+                missingSkills.map((skill) => (
+
                   <span
                     className="tag missing"
                     key={skill}
                   >
                     {skill}
                   </span>
-                )
+
+                ))
+
+              ) : (
+
+                <span>
+                  None
+                </span>
+
               )}
 
             </div>
 
           </div>
 
+
+          {/* Education */}
+
           <div className="details-section">
 
-            <h3>Education</h3>
+            <h3>
+              Education
+            </h3>
 
             <p>
-              {candidate.education}
+              {candidate.education ||
+                "Not available"}
             </p>
 
           </div>
 
+
+          {/* Experience */}
+
           <div className="details-section">
 
-            <h3>Experience</h3>
+            <h3>
+              Experience
+            </h3>
 
             <p>
-              {candidate.experience}
+              {candidate.experience ||
+                "Not available"}
             </p>
 
           </div>
 
+
+          {/* Certifications */}
+
           <div className="details-section">
 
-            <h3>Certifications</h3>
+            <h3>
+              Certifications
+            </h3>
 
-            <ul>
+            {certifications.length > 0 ? (
 
-              {candidate.certifications.map(
-                (certificate) => (
-                  <li key={certificate}>
-                    {certificate}
-                  </li>
-                )
-              )}
+              <ul>
 
-            </ul>
+                {certifications.map(
+                  (certificate) => (
+
+                    <li key={certificate}>
+                      {certificate}
+                    </li>
+
+                  )
+                )}
+
+              </ul>
+
+            ) : (
+
+              <p>
+                None
+              </p>
+
+            )}
 
           </div>
 
+
+          {/* Projects */}
+
           <div className="details-section">
 
-            <h3>Projects</h3>
+            <h3>
+              Projects
+            </h3>
 
-            <ul>
+            {projects.length > 0 ? (
 
-              {candidate.projects.map(
-                (project) => (
-                  <li key={project}>
-                    {project}
-                  </li>
-                )
-              )}
+              <ul>
 
-            </ul>
+                {projects.map(
+                  (project) => (
+
+                    <li key={project}>
+                      {project}
+                    </li>
+
+                  )
+                )}
+
+              </ul>
+
+            ) : (
+
+              <p>
+                None
+              </p>
+
+            )}
 
           </div>
 

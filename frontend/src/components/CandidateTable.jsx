@@ -7,8 +7,10 @@ function CandidateTable({ candidates }) {
     <div className="candidate-table-container">
 
       <div className="table-header">
+
         <div>
           <h2>Candidate Results</h2>
+
           <p>
             Candidates ranked according to the job requirements.
           </p>
@@ -17,13 +19,16 @@ function CandidateTable({ candidates }) {
         <div className="candidate-count">
           {candidates.length} Candidates
         </div>
+
       </div>
+
 
       <div className="table-wrapper">
 
         <table className="candidate-table">
 
           <thead>
+
             <tr>
               <th>Rank</th>
               <th>Candidate</th>
@@ -33,134 +38,195 @@ function CandidateTable({ candidates }) {
               <th>Matched Skills</th>
               <th>Missing Skills</th>
             </tr>
+
           </thead>
+
 
           <tbody>
 
-            {candidates.map((candidate, index) => (
+            {candidates.map((candidate, index) => {
 
-              <tr key={index}>
+              // Support both frontend and backend field names
+              const candidateName =
+                candidate.name ||
+                candidate.candidateName ||
+                "Unknown Candidate";
 
-                <td>
-                  <span className="rank">
-                    #{index + 1}
-                  </span>
-                </td>
+              const resumeName =
+                candidate.resume ||
+                candidate.originalName ||
+                candidate.fileName ||
+                "Resume";
 
-                <td>
-                  <strong className="candidate-name">
-                    {candidate.name}
-                  </strong>
-                </td>
+              const recommendation =
+                candidate.recommendation ||
+                candidate.aiRecommendation ||
+                "Pending analysis";
 
-                <td>
-                  <span className="resume-name">
-                    {candidate.resume}
-                  </span>
-                </td>
+              const score =
+                Number(candidate.score) || 0;
 
-                <td>
+              const matchedSkills =
+                candidate.matchedSkills || [];
 
-                  <div className="score-container">
+              const missingSkills =
+                candidate.missingSkills || [];
 
-                    <strong className="score">
-                      {candidate.score}%
+
+              return (
+
+                <tr
+                  key={candidate.id || index}
+                >
+
+                  {/* Rank */}
+
+                  <td>
+
+                    <span className="rank">
+                      #{index + 1}
+                    </span>
+
+                  </td>
+
+
+                  {/* Candidate Name */}
+
+                  <td>
+
+                    <strong className="candidate-name">
+                      {candidateName}
                     </strong>
 
-                    <div className="score-bar">
+                  </td>
 
-                      <div
-                        className="score-fill"
-                        style={{
-                          width: `${candidate.score}%`
-                        }}
-                      />
+
+                  {/* Resume */}
+
+                  <td>
+
+                    <span className="resume-name">
+                      {resumeName}
+                    </span>
+
+                  </td>
+
+
+                  {/* Match Score */}
+
+                  <td>
+
+                    <div className="score-container">
+
+                      <strong className="score">
+                        {score}%
+                      </strong>
+
+                      <div className="score-bar">
+
+                        <div
+                          className="score-fill"
+                          style={{
+                            width: `${score}%`
+                          }}
+                        />
+
+                      </div>
 
                     </div>
 
-                  </div>
+                  </td>
 
-                </td>
 
-                <td>
+                  {/* Recommendation */}
 
-                  <span
-                    className={`recommendation ${
-                      candidate.recommendation
-                        .toLowerCase()
-                        .replaceAll(" ", "-")
-                    }`}
-                  >
-                    {candidate.recommendation}
-                  </span>
+                  <td>
 
-                </td>
+                    <span
+                      className={`recommendation ${
+                        recommendation
+                          .toLowerCase()
+                          .replaceAll(" ", "-")
+                      }`}
+                    >
+                      {recommendation}
+                    </span>
 
-                <td>
+                  </td>
 
-                  <div className="skills">
 
-                    {candidate.matchedSkills?.length > 0 ? (
+                  {/* Matched Skills */}
 
-                      candidate.matchedSkills.map(
-                        (skill, skillIndex) => (
+                  <td>
 
-                          <span
-                            key={skillIndex}
-                            className="skill-tag matched-tag"
-                          >
-                            {skill}
-                          </span>
+                    <div className="skills">
 
+                      {matchedSkills.length > 0 ? (
+
+                        matchedSkills.map(
+                          (skill, skillIndex) => (
+
+                            <span
+                              key={skillIndex}
+                              className="skill-tag matched-tag"
+                            >
+                              {skill}
+                            </span>
+
+                          )
                         )
-                      )
 
-                    ) : (
+                      ) : (
 
-                      <span className="none">
-                        None
-                      </span>
+                        <span className="none">
+                          None
+                        </span>
 
-                    )}
+                      )}
 
-                  </div>
+                    </div>
 
-                </td>
+                  </td>
 
-                <td>
 
-                  <div className="skills">
+                  {/* Missing Skills */}
 
-                    {candidate.missingSkills?.length > 0 ? (
+                  <td>
 
-                      candidate.missingSkills.map(
-                        (skill, skillIndex) => (
+                    <div className="skills">
 
-                          <span
-                            key={skillIndex}
-                            className="skill-tag missing-tag"
-                          >
-                            {skill}
-                          </span>
+                      {missingSkills.length > 0 ? (
 
+                        missingSkills.map(
+                          (skill, skillIndex) => (
+
+                            <span
+                              key={skillIndex}
+                              className="skill-tag missing-tag"
+                            >
+                              {skill}
+                            </span>
+
+                          )
                         )
-                      )
 
-                    ) : (
+                      ) : (
 
-                      <span className="none">
-                        None
-                      </span>
+                        <span className="none">
+                          None
+                        </span>
 
-                    )}
+                      )}
 
-                  </div>
+                    </div>
 
-                </td>
+                  </td>
 
-              </tr>
+                </tr>
 
-            ))}
+              );
+
+            })}
 
           </tbody>
 
