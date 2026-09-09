@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://resume.onrender.com/api/candidates",
+  baseURL: "https://resume-aprk.onrender.com/api/candidates",
 });
 
 export const uploadResumes = async (files) => {
